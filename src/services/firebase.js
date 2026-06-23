@@ -4,7 +4,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -24,7 +24,10 @@ if (firebaseConfig.apiKey) {
   try {
     app = initializeApp(firebaseConfig);
     auth = getAuth(app);
-    db = getFirestore(app);
+    // Khởi tạo Firestore sử dụng Long-Polling chống lỗi bị chặn kết nối WebSocket
+    db = initializeFirestore(app, {
+      experimentalForceLongPolling: true
+    });
   } catch (error) {
     console.error('[Firebase] Lỗi khởi tạo:', error);
   }
