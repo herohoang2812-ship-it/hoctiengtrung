@@ -128,7 +128,9 @@ export default function App() {
           showToast(`Đồng bộ tài khoản học viên: ${cloudProfile.name || user.email}`, 'success');
         } catch (err) {
           console.error('[App] Lỗi đồng bộ dữ liệu đám mây:', err);
-          showToast('Lỗi đồng bộ đám mây. Tiến độ học của bạn đang chạy tạm thời ở bộ nhớ cục bộ.', 'warning');
+          showToast(`Lỗi đồng bộ đám mây: ${err.message}`, 'error');
+          // Hiển thị alert chi tiết để dễ dàng bắt lỗi
+          alert(`[Lỗi Đồng bộ Firestore]\nChi tiết: ${err.message}\nCode: ${err.code || 'không rõ'}\n\nVui lòng chụp ảnh màn hình thông báo này gửi lại để tôi xử lý.`);
         }
       } else {
         setCurrentUser(null);
