@@ -162,24 +162,57 @@ export default function SprechenView({ showToast, onActivityComplete, currentUse
     }
   };
 
+const PREDEFINED_AI_RESPONSES = {
+  1: [
+    '好的，一共十五块钱。您怎么付款？微信还是支付宝？',
+    '好的，收您十五块钱。这是您的苹果，慢走，欢迎下次再来！'
+  ],
+  2: [
+    '太好了！那 chúng ta 星期六晚上七点在电影院门口见，可以吗？',
+    '没问题，那我们星期六不见不散！拜拜！'
+  ],
+  3: [
+    '好的，那我们就坐地铁去吧。我们需要带些什么吃的或者水吗？',
+    '行，那我就准备一些面包和水果。星期六早上地铁站见！'
+  ],
+  4: [
+    '原来如此，查词典和结合上下文确实是好方法。那么你觉得看什么类型的电影最适合汉语学习者呢？',
+    '非常感谢你的分享，你的建议很有参考价值。请点击“评估整个对话”提交你的口语答复。'
+  ],
+  5: [
+    '你说的很有道理，完善公共服务设施和提供志愿者指导非常重要。作为年轻人，我们个人能为身边的老人做些什么吗？',
+    '非常感谢你对此社会话题的深刻探讨。对话讨论已结束，请点击“评估整个对话”生成完整成绩单。'
+  ]
+};
+
   const handleUserSpeechResult = async (text, durationMins = 0.05) => {
     const newUserMsg = { id: Date.now(), sender: 'user', text };
     const newChat = [...speakChat, newUserMsg];
     setSpeakChat(newChat);
 
     setIsAiTyping(true);
+    
+    // Giả lập thời gian suy nghĩ 1 giây cho AI tự nhiên hơn
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     try {
       if (currentUser) {
         await deductSpeechMinutesOnDb(currentUser.uid, durationMins);
       }
 
-      const aiText = await chatWithExaminer(
-        selectedSpeakTopic.title,
-        selectedSpeakTopic.scenario,
-        selectedSpeakTopic.prompts,
-        newChat,
-        text
-      );
+      const topicId = selectedSpeakTopic.id;
+      // Đếm số lượt user nói thực tế qua micro (bỏ qua câu đầu tiên là mock của đề bài)
+      const userTurns = newChat.filter(m => m.sender === 'user').length;
+      
+      let aiText = '';
+      const responses = PREDEFINED_AI_RESPONSES[topicId] || [];
+      const responseIndex = userTurns - 2; // userTurns = 2 ứng với câu đầu tiên nói qua micro
+
+      if (responseIndex >= 0 && responseIndex < responses.length) {
+        aiText = responses[responseIndex];
+      } else {
+        aiText = '谢谢你的回答。本轮对话讨论已经完成，请点击“评估整个对话”提交你的答卷！';
+      }
       
       const newAiResponse = { 
         id: Date.now() + 1, 
@@ -191,7 +224,7 @@ export default function SprechenView({ showToast, onActivityComplete, currentUse
       speakText(aiText);
     } catch (err) {
       console.error(err);
-      showToast(err.message || 'Lỗi khi tải phản hồi từ giám khảo mô phỏng.', 'warning');
+      showToast(err.message || 'Lỗi khi xử lý phản hồi.', 'warning');
     } finally {
       setIsAiTyping(false);
     }

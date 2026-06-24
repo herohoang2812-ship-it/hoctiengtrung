@@ -46,10 +46,10 @@ assert.equal(roadmap[0].focus, 'Hören');
   assert.equal(feedback.nextActions.length, 3);
 });
 test('gói trả phí có hạn mức rõ ràng và giảm giá năm chính xác', () => {
-  assert.equal(PRICING_PLANS.length, 4);
+  assert.equal(PRICING_PLANS.length, 2);
   assert.equal(PRICING_PLANS[0].monthlyPrice, 0);
-  assert.ok(PRICING_PLANS.slice(1).every(plan => plan.quota.includes('lượt nâng cao') && plan.quota.includes('phút phát âm')));
+  assert.ok(PRICING_PLANS.slice(1).every(plan => plan.quota.includes('lượt chấm AI') && plan.quota.includes('phút phát âm')));
   const plus = PRICING_PLANS.find(plan => plan.id === 'plus');
-  assert.equal(getPlanPrice(plus, 'monthly'), 49000);
-  assert.equal(getPlanPrice(plus, 'annual'), 39000);
+  assert.equal(getPlanPrice(plus, 'monthly'), 10000);
+  assert.equal(getPlanPrice(plus, 'annual'), 8000);
 });

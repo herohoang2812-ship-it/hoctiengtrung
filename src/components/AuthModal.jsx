@@ -115,9 +115,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, currentUser,
                   <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
                     <div style={{ 
                       width: `${Math.min(100, ((userProfile?.quota?.aiCredits ?? 0) / (
-                        userProfile?.subscription?.planId === 'free' ? 3 :
-                        userProfile?.subscription?.planId === 'plus' ? 20 : 
-                        userProfile?.subscription?.planId === 'pro' ? 60 : 150
+                        userProfile?.subscription?.planId === 'free' ? 3 : 999
                       )) * 100)}%`, 
                       height: '100%', 
                       background: 'var(--primary)' 
@@ -125,7 +123,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, currentUser,
                   </div>
                 )}
               </div>
-
+ 
               <div>
                 <div className="flex-between" style={{ fontSize: '12.5px', marginBottom: '6px' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Số phút phát âm (Speech):</span>
@@ -136,7 +134,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, currentUser,
                 {userProfile?.subscription?.planId && userProfile?.subscription?.planId !== 'free' && (
                   <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
                     <div style={{ 
-                      width: `${Math.min(100, ((userProfile?.quota?.speechMinutes ?? 0) / (userProfile?.subscription?.planId === 'plus' ? 60 : userProfile?.subscription?.planId === 'pro' ? 180 : 600)) * 100)}%`, 
+                      width: `${Math.min(100, ((userProfile?.quota?.speechMinutes ?? 0) / 600) * 100)}%`, 
                       height: '100%', 
                       background: 'var(--success)' 
                     }}></div>
