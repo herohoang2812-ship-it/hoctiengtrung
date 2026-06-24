@@ -31,9 +31,11 @@ service cloud.firestore {
       // Học viên chỉ được tự cập nhật profile cơ bản hoặc lastActiveAt. Admin có quyền cập nhật mọi trường (để nâng cấp gói cước)
       allow update: if (isOwner(uid)
         && request.resource.data.uid == resource.data.uid
-        && request.resource.data.subscription == resource.data.subscription
-        && request.resource.data.quota.aiCredits <= resource.data.quota.aiCredits
-        && request.resource.data.quota.speechMinutes <= resource.data.quota.speechMinutes
+        && (!('subscription' in resource.data) || request.resource.data.subscription == resource.data.subscription)
+        && (!('quota' in resource.data) || (
+            request.resource.data.quota.aiCredits <= resource.data.quota.aiCredits &&
+            request.resource.data.quota.speechMinutes <= resource.data.quota.speechMinutes
+           ))
         && request.resource.data.diff(resource.data).affectedKeys()
           .hasOnly(['name', 'level', 'specialty', 'profile', 'quota', 'avatarUrl', 'lastActiveAt']))
         || isAdmin();
