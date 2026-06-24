@@ -1561,6 +1561,13 @@ textarea.form-control {
   }
 }
 
+@media (max-width: 480px) {
+  .main-content {
+    padding: 12px;
+    padding-top: 72px;
+  }
+}
+
 /* ========================================
    UTILITY CLASSES
    ======================================== */
@@ -2278,6 +2285,12 @@ body:not(.light-theme) { --text-muted: #b4bac5; --text-dark: #8f96a3; }
 @media (max-width: 768px) {
   .stats-grid-mockup {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid-mockup {
+    grid-template-columns: 1fr;
   }
 }
 

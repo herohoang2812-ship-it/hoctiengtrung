@@ -23,6 +23,13 @@ import { signOutUser } from '../services/authService';
 
 export default function Sidebar({ activeTab, handleTabChange, sidebarOpen, setSidebarOpen, theme, toggleTheme, userProfile, currentUser, onAuthClick, activeFont, setActiveFont }) {
   
+  const onTabClick = (tabId) => {
+    handleTabChange(tabId);
+    if (setSidebarOpen) {
+      setSidebarOpen(false);
+    }
+  };
+
   const navGroups = [
     {
       title: 'HỌC CỐT LÕI',
@@ -97,7 +104,7 @@ export default function Sidebar({ activeTab, handleTabChange, sidebarOpen, setSi
           {/* Main Dashboard Button (Trang chủ học tập) */}
           <button 
             className={`sidebar-item ${activeTab === 'dashboard' ? 'active' : ''}`}
-            onClick={() => handleTabChange('dashboard')}
+            onClick={() => onTabClick('dashboard')}
             style={{ 
               width: '100%', 
               background: activeTab === 'dashboard' ? 'linear-gradient(135deg, var(--accent) 0%, #7f1d1d 100%)' : 'transparent',
@@ -136,7 +143,7 @@ export default function Sidebar({ activeTab, handleTabChange, sidebarOpen, setSi
                   <button 
                     key={item.id}
                     className={`sidebar-item ${isActive ? 'active' : ''}`}
-                    onClick={() => handleTabChange(item.id)}
+                    onClick={() => onTabClick(item.id)}
                     style={isActive ? {
                       background: 'rgba(197, 160, 89, 0.08)',
                       borderLeft: '3px solid var(--primary)',
@@ -181,7 +188,7 @@ export default function Sidebar({ activeTab, handleTabChange, sidebarOpen, setSi
               </div>
               <button 
                 className={`sidebar-item ${activeTab === 'admin' ? 'active' : ''}`}
-                onClick={() => handleTabChange('admin')}
+                onClick={() => onTabClick('admin')}
                 style={activeTab === 'admin' ? {
                   background: 'rgba(197, 160, 89, 0.08)',
                   borderLeft: '3px solid var(--primary)',
