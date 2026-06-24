@@ -18,7 +18,7 @@ import {
 import { formatVnd, PRICING_PLANS } from '../data/pricingPlans';
 
 const QUOTAS = {
-  plus: { aiCredits: 999, speechMinutes: 600 }
+  plus: { aiCredits: 30, speechMinutes: 600 }
 };
 
 export default function AdminView({ currentUser, showToast }) {

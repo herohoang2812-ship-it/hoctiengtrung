@@ -115,7 +115,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, currentUser,
                   <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
                     <div style={{ 
                       width: `${Math.min(100, ((userProfile?.quota?.aiCredits ?? 0) / (
-                        userProfile?.subscription?.planId === 'free' ? 3 : 999
+                        userProfile?.subscription?.planId === 'free' ? 3 : 30
                       )) * 100)}%`, 
                       height: '100%', 
                       background: 'var(--primary)' 

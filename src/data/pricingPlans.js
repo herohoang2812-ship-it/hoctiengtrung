@@ -10,9 +10,9 @@ export const PRICING_PLANS = [
   },
   {
     id: 'plus', name: 'HSK Premium', eyebrow: 'Phổ biến nhất', description: 'Mở khóa toàn bộ giới hạn và chấm bài nâng cao', monthlyPrice: 10000, featured: true,
-    quota: '999 lượt chấm AI · 600 phút phát âm/tháng',
+    quota: '30 lượt chấm AI · 600 phút phát âm/tháng',
     features: [
-      ['Toàn bộ tính năng HSK Basic', true], ['999 lượt chấm/hội thoại nâng cao', true], ['600 phút luyện phát âm', true],
+      ['Toàn bộ tính năng HSK Basic', true], ['30 lượt chấm/hội thoại nâng cao', true], ['600 phút luyện phát âm', true],
       ['Nhận xét Diagnostic nâng cao', true], ['Lộ trình học cá nhân hóa', true], ['Ưu tiên xử lý nhanh nhất', true],
     ],
   },
