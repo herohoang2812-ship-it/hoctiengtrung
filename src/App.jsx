@@ -129,8 +129,8 @@ export default function App() {
         } catch (err) {
           console.error('[App] Lỗi đồng bộ dữ liệu đám mây:', err);
           showToast(`Lỗi đồng bộ đám mây: ${err.message}`, 'error');
-          // Hiển thị alert chi tiết để dễ dàng bắt lỗi
-          alert(`[Lỗi Đồng bộ Firestore]\nChi tiết: ${err.message}\nCode: ${err.code || 'không rõ'}\n\nVui lòng chụp ảnh màn hình thông báo này gửi lại để tôi xử lý.`);
+          // Hiển thị alert chi tiết kèm cấu hình để dễ dàng kiểm tra biến môi trường
+          alert(`[Lỗi Đồng bộ Firestore]\nChi tiết: ${err.message}\nCode: ${err.code || 'không rõ'}\n\nCấu hình nhận được trên Vercel:\n- Project ID: ${import.meta.env.VITE_FIREBASE_PROJECT_ID || 'TRỐNG (Chưa nhận)'}\n- Auth Domain: ${import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'TRỐNG (Chưa nhận)'}\n- App ID: ${import.meta.env.VITE_FIREBASE_APP_ID || 'TRỐNG (Chưa nhận)'}\n\nVui lòng chụp ảnh màn hình thông báo này.`);
         }
       } else {
         setCurrentUser(null);
